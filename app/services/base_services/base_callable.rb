@@ -39,7 +39,7 @@ module BaseServices
       self.params = params.first
 
       run_callbacks(:call) do
-        perform(*params)
+        perform(**(params.first || {}))
       end
     end
 
