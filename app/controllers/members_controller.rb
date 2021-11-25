@@ -66,7 +66,7 @@ class MembersController < ApplicationController
   def update
     service_call = Members::UpdateService
                      .new(user: current_user, model: @member)
-                     .call(permitted_params.member)
+                     .call(permitted_params.member.to_h.symbolize_keys)
 
     if service_call.success?
       display_success(I18n.t(:notice_successful_update))
@@ -215,7 +215,7 @@ class MembersController < ApplicationController
     user_ids.sort_by! { |id| group_ids.include?(id) ? 1 : -1 }
 
     user_ids.each do |id|
-      yield permitted_params.member.merge(user_id: id, project: @project)
+      yield permitted_params.member.to_h.symbolize_keys.merge(user_id: id, project: @project)
     end
   end
 

@@ -132,7 +132,7 @@ class CustomFieldsController < ApplicationController
   end
 
   def get_custom_field_params
-    custom_field_params = permitted_params.custom_field
+    custom_field_params = permitted_params.custom_field.to_h.symbolize_keys
 
     if !EnterpriseToken.allows_to?(:multiselect_custom_fields)
       custom_field_params.delete :multi_value

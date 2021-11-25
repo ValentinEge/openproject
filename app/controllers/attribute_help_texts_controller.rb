@@ -105,11 +105,11 @@ class AttributeHelpTextsController < ApplicationController
   private
 
   def permitted_params_with_attachments
-    permitted_params.attribute_help_text.merge(attachment_params)
+    permitted_params.attribute_help_text.to_h.symbolize_keys.merge(attachment_params)
   end
 
   def attachment_params
-    attachment_params = permitted_params.attachments.to_h
+    attachment_params = permitted_params.attachments.to_h.symbolize_keys
 
     if attachment_params.any?
       { attachment_ids: attachment_params.values.map(&:values).flatten }

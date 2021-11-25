@@ -107,7 +107,7 @@ class WikiController < ApplicationController
 
   def create
     call = attachable_create_call ::WikiPages::CreateService,
-                                  args: permitted_params.wiki_page_with_content.to_h.merge(wiki: @wiki)
+                                  args: permitted_params.wiki_page_with_content.to_h.symbolize_keys.merge(wiki: @wiki)
 
     @page = call.result
     @content = @page.content
@@ -169,7 +169,7 @@ class WikiController < ApplicationController
 
     call = attachable_update_call ::WikiPages::UpdateService,
                                   model: @page,
-                                  args: permitted_params.wiki_page_with_content.to_h
+                                  args: permitted_params.wiki_page_with_content.to_h.symbolize_keys
 
     @page = call.result
     @content = @page.content

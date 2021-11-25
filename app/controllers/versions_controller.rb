@@ -70,6 +70,8 @@ class VersionsController < ApplicationController
   def create
     attributes = permitted_params
                  .version
+                 .to_h
+                 .symbolize_keys
                  .merge(project_id: @project.id)
 
     call = Versions::CreateService
@@ -84,6 +86,8 @@ class VersionsController < ApplicationController
   def update
     attributes = permitted_params
                  .version
+                 .to_h
+                 .symbolize_keys
 
     call = Versions::UpdateService
            .new(user: current_user,

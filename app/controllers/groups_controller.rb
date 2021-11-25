@@ -84,7 +84,7 @@ class GroupsController < ApplicationController
   def create
     service_call = Groups::CreateService
                      .new(user: current_user)
-                     .call(permitted_params.group)
+                     .call(permitted_params.group.to_h.symbolize_keys)
 
     @group = service_call.result
 
@@ -105,7 +105,7 @@ class GroupsController < ApplicationController
   def update
     service_call = Groups::UpdateService
                    .new(user: current_user, model: @group)
-                   .call(permitted_params.group)
+                   .call(permitted_params.group.to_h.symbolize_keys)
 
     respond_to do |format|
       if service_call.success?
@@ -154,7 +154,7 @@ class GroupsController < ApplicationController
   end
 
   def create_memberships
-    membership_params = permitted_params.group_membership[:new_membership]
+    membership_params = permitted_params.group_membership[:new_membership].to_h.symbolize_keys
 
     service_call = Members::CreateService
                    .new(user: current_user)
@@ -164,7 +164,7 @@ class GroupsController < ApplicationController
   end
 
   def edit_membership
-    membership_params = permitted_params.group_membership
+    membership_params = permitted_params.group_membership.to_h.symbolize_keys
 
     @membership = Member.find(membership_params[:membership_id])
 

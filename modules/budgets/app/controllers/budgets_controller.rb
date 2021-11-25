@@ -102,7 +102,7 @@ class BudgetsController < ApplicationController
 
   def create
     call = attachable_create_call ::Budgets::CreateService,
-                                  args: permitted_params.budget.merge(project: @project)
+                                  args: permitted_params.budget.to_h.with_indifferent_access.merge(project: @project)
     @budget = call.result
 
     if call.success?
@@ -121,7 +121,7 @@ class BudgetsController < ApplicationController
   def update
     call = attachable_update_call ::Budgets::UpdateService,
                                   model: @budget,
-                                  args: permitted_params.budget
+                                  args: permitted_params.budget.to_h.with_indifferent_access
 
     if call.success?
       flash[:notice] = t(:notice_successful_update)

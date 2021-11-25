@@ -309,7 +309,7 @@ class UsersController < ApplicationController
   end
 
   def build_user_update_params
-    pref_params = permitted_params.pref.to_h
+    pref_params = permitted_params.pref.to_h.symbolize_keys
     update_params = permitted_params
       .user_create_as_admin(@user.uses_external_authentication?, @user.change_password_allowed?)
       .to_h
