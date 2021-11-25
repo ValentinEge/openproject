@@ -313,6 +313,7 @@ class UsersController < ApplicationController
     update_params = permitted_params
       .user_create_as_admin(@user.uses_external_authentication?, @user.change_password_allowed?)
       .to_h
+      .symbolize_keys
       .merge(pref: pref_params)
 
     return update_params unless @user.change_password_allowed?
@@ -337,6 +338,8 @@ class UsersController < ApplicationController
   def create_params
     permitted_params
       .user_create_as_admin(false, false)
+      .to_h
+      .symbolize_keys
       .merge(admin: params[:user][:admin] || false,
              login: params[:user][:login] || params[:user][:mail],
              status: User.statuses[:invited])
