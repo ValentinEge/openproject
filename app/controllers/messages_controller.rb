@@ -158,14 +158,11 @@ class MessagesController < ApplicationController
     Messages::UpdateService
       .new(user: current_user,
            model: message)
-      .call(permitted_params
-            .message(@project)
-            .to_h
-            .symbolize_keys
+      .call(permitted_params.message(@project)
             .merge(attachment_params))
   end
 
-  def create_message(forum, message_params = permitted_params.message(forum.project).to_h.symbolize_keys)
+  def create_message(forum, message_params = permitted_params.message(forum.project))
     params = message_params
                .merge(forum: forum)
                .merge(attachment_params)

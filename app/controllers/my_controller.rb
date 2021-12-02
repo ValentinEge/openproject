@@ -153,11 +153,11 @@ class MyController < ApplicationController
   end
 
   def write_settings
-    user_params = permitted_params.my_account_settings.to_h.deep_symbolize_keys
+    user_params = permitted_params.my_account_settings
 
     result = Users::UpdateService
              .new(user: current_user, model: current_user)
-             .call(user_params)
+             .call(user_params.to_h)
 
     if result&.success
       flash[:notice] = t(:notice_account_updated)

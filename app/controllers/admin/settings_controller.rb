@@ -56,7 +56,7 @@ module Admin
 
       call = ::Settings::UpdateService
         .new(user: current_user)
-        .call(**settings_params)
+        .call(settings_params)
 
       call.on_success { flash[:notice] = t(:notice_successful_update) }
       call.on_failure { flash[:error] = call.message || I18n.t(:notice_internal_server_error) }
@@ -95,7 +95,7 @@ module Admin
     end
 
     def settings_params
-      permitted_params.settings.to_h.symbolize_keys
+      permitted_params.settings.to_h
     end
   end
 end

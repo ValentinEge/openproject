@@ -71,7 +71,7 @@ class RolesController < ApplicationController
 
   def update
     @role = Role.find(params[:id])
-    @call = update_role(@role, permitted_params.role.to_h.symbolize_keys)
+    @call = update_role(@role, permitted_params.role)
 
     if @call.success?
       flash[:notice] = I18n.t(:notice_successful_update)
@@ -173,9 +173,7 @@ class RolesController < ApplicationController
   end
 
   def new_params
-    (permitted_params.role? || {})
-      .to_h
-      .symbolize_keys
+    permitted_params.role? || {}
   end
 
   def create_params

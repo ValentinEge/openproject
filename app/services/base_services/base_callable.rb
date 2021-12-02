@@ -36,7 +36,7 @@ module BaseServices
     include ::WithReversibleState
 
     def call(*params)
-      self.params = params.first || {}
+      self.params = params.first
 
       run_callbacks(:call) do
         perform(**(params.first || {}))

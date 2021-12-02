@@ -496,7 +496,7 @@ describe Projects::CopyService, 'integration', type: :model do
             wp.add_watcher user
             wp.save
 
-            user.locked!
+            user.lock!
 
             source.work_packages << wp
           end

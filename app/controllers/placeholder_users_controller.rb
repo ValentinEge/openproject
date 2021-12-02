@@ -75,7 +75,7 @@ class PlaceholderUsersController < ApplicationController
 
   def create
     service = PlaceholderUsers::CreateService.new(user: User.current)
-    service_result = service.call(permitted_params.placeholder_user.to_h.symbolize_keys)
+    service_result = service.call(permitted_params.placeholder_user)
     @placeholder_user = service_result.result
 
     if service_result.success?
@@ -104,7 +104,7 @@ class PlaceholderUsersController < ApplicationController
     service_result = PlaceholderUsers::UpdateService
       .new(user: User.current,
            model: @placeholder_user)
-      .call(permitted_params.placeholder_user.to_h.symbolize_keys)
+      .call(permitted_params.placeholder_user)
 
     if service_result.success?
       respond_to do |format|
